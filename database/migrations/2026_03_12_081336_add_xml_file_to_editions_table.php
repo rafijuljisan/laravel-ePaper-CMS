@@ -11,17 +11,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('editions', function (Blueprint $table) {
-            $table->string('xml_file')->nullable()->after('pdf_file');
+            $table->string('xml_file')->nullable(); // ← removed ->after('pdf_file')
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('editions', function (Blueprint $table) {
-            //
+            $table->dropColumn('xml_file'); // ← also fix the down() method
         });
     }
 };

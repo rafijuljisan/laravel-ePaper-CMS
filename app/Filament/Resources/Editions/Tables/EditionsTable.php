@@ -59,7 +59,7 @@ class EditionsTable
                         $record->update(['status' => 'processing']);
                         
                         // Dispatch the Background Job!
-                        ProcessEditionPdf::dispatch($record);
+                        ProcessEditionPdf::dispatchSync($record);
                     
                         Notification::make()
                             ->title('Processing Started')

@@ -12,16 +12,16 @@ class EpaperController extends Controller
         $latestEdition = Edition::with(['pages.hotspots.article'])->latest('edition_date')->first();
         $editions = Edition::latest('edition_date')->take(10)->get();
 
-        return view('welcome', compact('latestEdition', 'editions'));
+        return view('epaper.index', compact('latestEdition', 'editions'));  // ← changed from 'welcome'
     }
 
     public function show(Edition $edition)
     {
         $edition->load(['pages.hotspots.article']);
         $editions = Edition::latest('edition_date')->take(10)->get();
-        $latestEdition = $edition; // treat selected edition as active
+        $latestEdition = $edition;
 
-        return view('welcome', compact('latestEdition', 'editions'));
+        return view('epaper.index', compact('latestEdition', 'editions'));  // ← changed from 'welcome'
     }
 
     public function article(Article $article)
