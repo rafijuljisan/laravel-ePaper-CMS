@@ -48,12 +48,14 @@ class Settings extends Page implements HasForms
                         FileUpload::make('site_logo')
                             ->label('Site Logo')
                             ->image()
+                            ->disk('public')
                             ->directory('settings')
                             ->helperText('Shown instead of text logo if uploaded.'),
 
                         FileUpload::make('site_favicon')
                             ->label('Favicon')
                             ->image()
+                            ->disk('public')
                             ->directory('settings'),
                     ]),
 
@@ -98,6 +100,7 @@ class Settings extends Page implements HasForms
                         FileUpload::make('header_ad_image')
                             ->label('Header Ad Image (468×60)')
                             ->image()
+                            ->disk('public')
                             ->directory('ads'),
 
                         TextInput::make('header_ad_url')
@@ -107,6 +110,7 @@ class Settings extends Page implements HasForms
                         FileUpload::make('sidebar_ad1_image')
                             ->label('Sidebar Ad 1 Image')
                             ->image()
+                            ->disk('public')
                             ->directory('ads'),
 
                         TextInput::make('sidebar_ad1_url')
@@ -116,6 +120,7 @@ class Settings extends Page implements HasForms
                         FileUpload::make('sidebar_ad2_image')
                             ->label('Sidebar Ad 2 Image')
                             ->image()
+                            ->disk('public')
                             ->directory('ads'),
 
                         TextInput::make('sidebar_ad2_url')

@@ -71,7 +71,7 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
-            font-size: 11px;
+            font-size: 14px;
             text-decoration: none;
             transition: background 0.2s;
         }
@@ -81,7 +81,7 @@
         }
 
         .topbar-date {
-            font-size: 11px;
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.85);
             font-family: 'Noto Serif Bengali', serif;
             white-space: nowrap;
@@ -130,7 +130,7 @@
             align-items: center;
             justify-content: center;
             color: #999;
-            font-size: 12px;
+            font-size: 14px;
             border-radius: 4px;
         }
 
@@ -161,7 +161,7 @@
             gap: 5px;
             padding: 10px 14px;
             color: rgba(255, 255, 255, 0.8);
-            font-size: 13px;
+            font-size: 14px;
             font-family: 'Noto Serif Bengali', serif;
             text-decoration: none;
             white-space: nowrap;
@@ -178,7 +178,7 @@
         }
 
         .nav-icon {
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .nav-date-badge {
@@ -186,7 +186,7 @@
             color: #fff;
             padding: 4px 10px;
             border-radius: 3px;
-            font-size: 11px;
+            font-size: 14px;
             white-space: nowrap;
             flex-shrink: 0;
             margin-left: 8px;
@@ -265,7 +265,7 @@
 
         .nav-drawer-date {
             padding: 10px 20px;
-            font-size: 11px;
+            font-size: 14px;
             color: #555;
             border-top: 1px solid #1e1a08;
             font-family: 'Noto Serif Bengali', serif;
@@ -277,41 +277,164 @@
         }
 
         /* ===== FOOTER ===== */
-        .site-footer {
-            background: var(--ink);
-            color: rgba(255, 255, 255, 0.6);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            font-size: 12px;
-            border-top: 3px solid var(--accent);
-            flex-wrap: wrap;
-        }
+        /* ===== FOOTER ===== */
+.site-footer {
+    background: var(--ink);
+    border-top: 3px solid var(--accent);
+    padding: 32px 20px 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 14px;
+}
 
-        .footer-left {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-        .footer-left strong {
-            color: rgba(255, 255, 255, 0.9);
-            font-family: 'Noto Serif Bengali', serif;
-            font-size: 13px;
-        }
+.footer-brand .footer-logo-text {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+}
 
-        .footer-right {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
+.footer-brand .footer-tagline {
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: 'Playfair Display', serif;
+    display: block;
+    margin-bottom: 14px;
+}
 
-        .footer-contact {
-            color: rgba(255, 255, 255, 0.5);
-        }
+.footer-brand p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 240px;
+}
+
+.footer-col-title {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer-contact-list .fc-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    opacity: 0.5;
+}
+
+.footer-social-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.footer-social-row a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.footer-social-row a:hover {
+    border-color: var(--accent);
+    color: #fff;
+    background: rgba(192, 57, 43, 0.15);
+}
+
+.footer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.45);
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.footer-bar a {
+    color: rgba(255, 255, 255, 0.75);  /* was 0.3 */
+    text-decoration: none;
+    font-size: 14px;                 /* was inherited 11px */
+    font-weight: 500;
+}
+
+.footer-bar a:hover {
+    color: #fff;                       /* was 0.6 */
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .footer-main {
+        grid-template-columns: 1fr 1fr;
+    }
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .site-footer {
+        padding: 24px 14px 0;
+    }
+    .footer-main {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding-bottom: 20px;
+    }
+    .footer-brand {
+        grid-column: auto;
+    }
+    .footer-brand p {
+        max-width: 100%;
+    }
+}
 
         /* ============================================================
            RESPONSIVE BREAKPOINTS
@@ -330,7 +453,7 @@
 
             .nav-item {
                 padding: 10px 10px;
-                font-size: 12px;
+                font-size: 13px;
             }
         }
 
@@ -357,7 +480,7 @@
             }
 
             .logo-subtitle {
-                font-size: 9px;
+                font-size: 11px;
                 letter-spacing: 1.5px;
             }
 
@@ -380,20 +503,6 @@
 
             .nav-date-badge {
                 display: none;
-            }
-
-            /* Footer */
-            .site-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 14px;
-                gap: 8px;
-            }
-
-            .footer-right {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
             }
         }
 
@@ -526,28 +635,84 @@
 
     {{-- ===== FOOTER ===== --}}
     <footer class="site-footer">
-        <div class="site-container"
-            style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-            <div class="footer-left">
-                <strong>{{ $settings->site_name }}</strong>
-                @if($settings->editor_name)
-                    <span>বার্তা সম্পাদক: {{ $settings->editor_name }}</span>
-                @endif
-                @if($settings->site_address)
-                    <span>{{ $settings->site_address }}</span>
-                @endif
+    <div class="site-container">
+
+        <div class="footer-main">
+
+            {{-- Brand column --}}
+            <div class="footer-brand">
+                <span class="footer-logo-text">{{ $settings->site_name }}</span>
+                <span class="footer-tagline">{{ $settings->site_tagline ?? 'সংবাদ ও তথ্যের নির্ভরযোগ্য উৎস' }}</span>
+                <p>আপনার বিশ্বস্ত সংবাদ মাধ্যম। সত্য, নিরপেক্ষ ও দায়িত্বশীল সাংবাদিকতায় আমরা প্রতিশ্রুতিবদ্ধ।</p>
             </div>
-            <div class="footer-right">
-                @if($settings->site_email)
-                    <span class="footer-contact">✉️ {{ $settings->site_email }}</span>
-                @endif
-                @if($settings->site_phone)
-                    <span class="footer-contact">📞 {{ $settings->site_phone }}</span>
-                @endif
-                <span class="footer-contact">© {{ date('Y') }} সর্বস্বত্ব সংরক্ষিত</span>
+
+            {{-- Contact column --}}
+            <div class="footer-col">
+                <p class="footer-col-title">যোগাযোগ</p>
+                <ul class="footer-contact-list">
+                    @if($settings->editor_name)
+                        <li>
+                            <svg class="fc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                            <span>বার্তা সম্পাদক: {{ $settings->editor_name }}</span>
+                        </li>
+                    @endif
+                    @if($settings->site_email)
+                        <li>
+                            <svg class="fc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                            </svg>
+                            <span>{{ $settings->site_email }}</span>
+                        </li>
+                    @endif
+                    @if($settings->site_phone)
+                        <li>
+                            <svg class="fc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 6.75z" />
+                            </svg>
+                            <span>{{ $settings->site_phone }}</span>
+                        </li>
+                    @endif
+                    @if($settings->site_address)
+                        <li>
+                            <svg class="fc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                            </svg>
+                            <span>{{ $settings->site_address }}</span>
+                        </li>
+                    @endif
+                </ul>
             </div>
+
+            {{-- Social column --}}
+            <div class="footer-col">
+                <p class="footer-col-title">আমাদের অনুসরণ করুন</p>
+                <div class="footer-social-row">
+                    @if($settings->facebook_url)
+                        <a href="{{ $settings->facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+                    @endif
+                    @if($settings->twitter_url)
+                        <a href="{{ $settings->twitter_url }}" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a>
+                    @endif
+                    @if($settings->youtube_url)
+                        <a href="{{ $settings->youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube">▶</a>
+                    @endif
+                </div>
+            </div>
+
         </div>
-    </footer>
+
+        {{-- Bottom bar --}}
+        {{-- Bottom bar --}}
+        <div class="footer-bar">
+            <span>© {{ date('Y') }} {{ $settings->site_name }} — সর্বস্বত্ব সংরক্ষিত</span>
+            <span>Developed by <a href="https://jisan.openwindowbd.com" target="_blank" rel="noopener">Md Jisan Sheikh</a></span>
+        </div>
+
+    </div>
+</footer>
 
     <script>
         function toggleMobileNav() {

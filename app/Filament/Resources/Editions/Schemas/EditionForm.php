@@ -43,6 +43,7 @@ class EditionForm
                         SpatieMediaLibraryFileUpload::make('pdf')
                             ->collection('editions')
                             ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(51200)   // 50MB in KB — add this line
                             ->required()
                             ->helperText('Upload the full QuarkXPress exported PDF here.')
                             ->columnSpanFull(),
