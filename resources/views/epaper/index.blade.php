@@ -1116,7 +1116,7 @@
         let curIdx = 0;
         let hzScale = 1;
         let curHotspot = null;
-        let curPage = null;
+        let curPage = PAGES.length > 0 ? PAGES[0] : null;  // ← initialize immediately
         let artLoaded = false;
 
         /* ================================================================
@@ -1128,8 +1128,10 @@
         const pageInfoLabel = document.getElementById('pageInfoLabel');
 
         function onImgLoad() {
-            positionHotspotLayer();
-            renderHotspots();
+            requestAnimationFrame(() => {
+                positionHotspotLayer();
+                renderHotspots();
+            });
         }
 
         /* After image renders, size the overlay to match the rendered image */
@@ -1216,20 +1218,15 @@
             epImg.src = curPage.image_url;
             epImg.onload = () => {
                 epImg.classList.remove('loading');
-                positionHotspotLayer();
-                renderHotspots();
+                requestAnimationFrame(() => {
+                    positionHotspotLayer();
+                    renderHotspots();
+                });
             };
         }
 
         window.prevPage = () => goToIdx(curIdx - 1);
         window.nextPage = () => goToIdx(curIdx + 1);
-
-        /* Init */
-        if (PAGES.length > 0) {
-            curPage = PAGES[0];
-            document.getElementById('btnPrev')?.classList.add('disabled');
-            if (PAGES.length === 1) document.getElementById('btnNext')?.classList.add('disabled');
-        }
 
         /* ================================================================
            PAGE ACTIONS
@@ -1474,11 +1471,16 @@ img.onload = function () {
         });
 
         /* ================================================================
-           INIT
+        INIT
         ================================================================ */
         renderCalendar();
 
-        // Set initial prev/next state
+        // Re-trigger hotspot render if image loaded before this script ran (cache hit)
+        if (epImg && epImg.complete && epImg.naturalWidth > 0) {
+            onImgLoad();
+        }
+
+        // Set initial prev/next button state
         if (PAGES.length <= 1) {
             document.getElementById('btnPrev')?.classList.add('disabled');
             document.getElementById('btnNext')?.classList.add('disabled');
