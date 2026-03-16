@@ -136,8 +136,8 @@
                 </div>
                 <div style="margin-bottom: 0.75rem;">
                     <label style="display:block;font-size:0.875rem;font-weight:bold;color:#374151;margin-bottom:0.25rem;">Select Article</label>
-                    <select wire:model="selectedArticleId" style="width:100%;border:1px solid #d1d5db;border-radius:0.375rem;padding:0.5rem;" required>
-                        <option value="">-- Choose Article --</option>
+                    <select wire:model="selectedArticleId" style="width:100%;border:1px solid #d1d5db;border-radius:0.375rem;padding:0.5rem;">
+                        <option value="">-- No Article (optional) --</option>
                         @foreach($this->articles as $article)
                             <option value="{{ $article->id }}">{{ $article->title }}</option>
                         @endforeach

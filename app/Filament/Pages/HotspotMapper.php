@@ -70,18 +70,16 @@ class HotspotMapper extends Page
     public function addToPending()
     {
         $this->validate([
-            'selectedArticleId' => 'required|exists:articles,id',
+            'selectedArticleId' => 'nullable|exists:articles,id',
             'draftX' => 'required',
-        ], [
-            'selectedArticleId.required' => 'Please select an article for this hotspot.'
         ]);
 
-        $article = Article::find($this->selectedArticleId);
+        $article = $this->selectedArticleId ? Article::find($this->selectedArticleId) : null;
 
         $this->pendingHotspots[] = [
             'tempId' => uniqid(),
             'article_id' => $this->selectedArticleId,
-            'articleTitle' => $article->title ?? 'Unknown',
+            'articleTitle' => $article->title ?? '(No Article)',
             'x' => $this->draftX,
             'y' => $this->draftY,
             'width' => $this->draftW,
