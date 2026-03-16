@@ -540,12 +540,12 @@
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.45);
             display: none;
             align-items: center;
             justify-content: center;
             padding: 16px;
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(2px);
         }
 
         .hz-overlay.open {
@@ -554,6 +554,7 @@
 
         .hz-box {
             background: #fff;
+            border: 1px solid #ddd;
             border-radius: 6px;
             overflow: hidden;
             display: flex;
@@ -567,7 +568,7 @@
 
         /* Modal header with toolbar */
         .hz-header {
-            background: #1a1a2e;
+            background: #1a6faf;
             color: #fff;
             padding: 10px 14px;
             display: flex;
@@ -623,11 +624,10 @@
         }
 
         .hz-btn.close-btn {
-            background: #555;
+            background: rgba(255, 255, 255, 0.25);
         }
-
         .hz-btn.close-btn:hover {
-            background: #333;
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .hz-zoom-level {
@@ -641,7 +641,7 @@
         .hz-body {
             overflow: auto;
             flex: 1;
-            background: #555;
+            background: #f0ebe0;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -846,14 +846,16 @@
 
             /* Modal responsive */
             .hz-box {
-                max-width: 100%;
-                max-height: 95vh;
-                border-radius: 8px 8px 0 0;
+                max-width: 95vw;
+                max-height: 90vh;
+                border-radius: 8px;  /* all corners rounded, not just top */
+                width: 95vw;
             }
 
             .hz-overlay {
-                align-items: flex-end;
-                padding: 0;
+                align-items: center;  /* ← vertically centered */
+                justify-content: center;
+                padding: 16px;
             }
 
             .hz-title {
@@ -1317,21 +1319,45 @@ img.onload = function () {
     const sw = Math.min(hw + pad * 2, natW - sx);
     const sh = Math.min(hh + pad * 2, natH - sy);
 
+    // Scale up so the canvas displays at a readable size
+    // Target: fill 80% of viewport width or 700px, whichever is smaller
+    // Display size: fill 82% of viewport width, max 760px
+    const targetDisplayW = Math.min(window.innerWidth * 0.82, 760);
+    const targetDisplayH = Math.min(window.innerHeight * 0.75, 700);
+
+    // Keep aspect ratio of the cropped region
+    const cropAspect = sw / sh;
+    let displayW, displayH;
+    if (cropAspect > targetDisplayW / targetDisplayH) {
+        displayW = targetDisplayW;
+        displayH = Math.round(targetDisplayW / cropAspect);
+    } else {
+        displayH = targetDisplayH;
+        displayW = Math.round(targetDisplayH * cropAspect);
+    }
+
     const dpr = window.devicePixelRatio || 1;
     const canvas = document.getElementById('hzCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width  = sw * dpr;
-    canvas.height = sh * dpr;
-    canvas.style.width  = sw + 'px';
-    canvas.style.height = sh + 'px';
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw * dpr, sh * dpr);
 
-    canvas._sw = sw;
-    canvas._sh = sh;
+    // Canvas buffer = display size × dpr (retina-sharp)
+    // Source = native image pixels (sx,sy,sw,sh already in natW/natH space)
+    // This means we're downscaling from high-res native → display, never upscaling
+    canvas.width  = displayW * dpr;
+    canvas.height = displayH * dpr;
+    canvas.style.width  = displayW + 'px';
+    canvas.style.height = displayH + 'px';
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    // Draw: source crop from full native image → destination at full canvas buffer size
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, displayW * dpr, displayH * dpr);
+
+    canvas._sw = displayW;
+    canvas._sh = displayH;
     canvas._sx = sx;
     canvas._sy = sy;
 
-    const modalMaxW = Math.min(sw + 32, window.innerWidth * 0.92);
+    const modalMaxW = Math.min(displayW + 32, window.innerWidth * 0.92);
     document.getElementById('hzBox').style.width = modalMaxW + 'px';
     document.getElementById('hzBox').style.maxWidth = '92vw';
 

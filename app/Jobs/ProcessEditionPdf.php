@@ -31,7 +31,6 @@ class ProcessEditionPdf implements ShouldQueue
     public function handle(): void
     {
         try {
-            // 1. Get the PDF file from Spatie Media Library
             $pdfMedia = $this->edition->getFirstMedia('editions');
 
             if (!$pdfMedia) {
@@ -40,37 +39,42 @@ class ProcessEditionPdf implements ShouldQueue
 
             $pdfPath = $pdfMedia->getPath();
 
-            // 2. Initialize Spatie PDF to Image
-            $pdf = new Pdf($pdfPath);
-            $totalPages = $pdf->getNumberOfPages();
+            // Get total pages via Imagick
+            $counter = new \Imagick();
+            $counter->pingImage($pdfPath);
+            $totalPages = $counter->getNumberImages();
+            $counter->clear();
+            $counter->destroy();
 
-            // Create a specific folder for this edition in public storage
             $storageFolder = "epaper/editions/{$this->edition->id}";
             Storage::disk('public')->makeDirectory($storageFolder);
 
-            // Ensure temp directory exists for intermediate processing
             $tempDir = storage_path('app/temp');
             if (!file_exists($tempDir)) {
                 mkdir($tempDir, 0755, true);
             }
 
-            // 3. Loop through every page in the PDF
             for ($pageNumber = 1; $pageNumber <= $totalPages; $pageNumber++) {
 
-                $fileName = "page-{$pageNumber}.jpg";
+                $fileName = "page-{$pageNumber}.png";
                 $tempImagePath = "{$tempDir}/" . uniqid() . "-{$fileName}";
                 $publicImagePath = "{$storageFolder}/{$fileName}";
 
-                // Extract the specific page as a high-quality JPG
-                $pdf->setPage($pageNumber)
-                    ->setOutputFormat('jpg')
-                    ->saveImage($tempImagePath);
+                // Imagick: resolution MUST be set before readImage
+                $imagick = new \Imagick();
+                $imagick->setResolution(200, 200);
+                $imagick->readImage($pdfPath . '[' . ($pageNumber - 1) . ']');
+                $imagick->setImageFormat('png');
+                $imagick->setImageColorspace(\Imagick::COLORSPACE_SRGB);
+                $imagick->setImageCompression(\Imagick::COMPRESSION_NO);
+                $imagick->setImageCompressionQuality(100);
+                $imagick->stripImage();
+                $imagick->writeImage($tempImagePath);
+                $imagick->clear();
+                $imagick->destroy();
 
-                // Move the generated image to Laravel's public storage disk
                 Storage::disk('public')->put($publicImagePath, file_get_contents($tempImagePath));
 
-                // 4. Save the Page record to the database
-                // Get actual image dimensions after saving
                 $savedImagePath = public_path('storage/' . $publicImagePath);
                 $imageSize = @getimagesize($savedImagePath);
 
@@ -82,19 +86,15 @@ class ProcessEditionPdf implements ShouldQueue
                     [
                         'image_path' => $publicImagePath,
                         'thumbnail_path' => $publicImagePath,
-                        'width' => $imageSize ? $imageSize[0] : null,  // ← real width
-                        'height' => $imageSize ? $imageSize[1] : null,  // ← real height
+                        'width' => $imageSize ? $imageSize[0] : null,
+                        'height' => $imageSize ? $imageSize[1] : null,
                     ]
                 );
 
-                // Free up cPanel disk space instantly by deleting the temp file
                 @unlink($tempImagePath);
             }
 
-            // 🚀 THE NEW AUTOMATION TRIGGER
-            // After all pages are saved to the database, run the XML parser
             XmlParser::process($this->edition);
-            // 5. Mark the edition as published once all pages are extracted successfully
             $this->edition->update(['status' => 'published']);
 
         } catch (\Exception $e) {

@@ -36,19 +36,22 @@ class HotspotMapper extends Page
 
     public function getPagesProperty()
     {
-        if (!$this->editionId) return [];
+        if (!$this->editionId)
+            return [];
         return EpaperPage::where('edition_id', $this->editionId)->orderBy('page_number')->get();
     }
 
     public function getArticlesProperty()
     {
-        if (!$this->editionId) return [];
+        if (!$this->editionId)
+            return [];
         return Article::where('edition_id', $this->editionId)->orderBy('title')->get();
     }
 
     public function getActivePageProperty()
     {
-        if (!$this->pageId) return null;
+        if (!$this->pageId)
+            return null;
         return EpaperPage::with('hotspots.article')->find($this->pageId);
     }
 
@@ -60,14 +63,7 @@ class HotspotMapper extends Page
         $this->draftW = $w;
         $this->draftH = $h;
         $this->selectedArticleId = null;
-
-        // Auto-heal page dimensions
-        if ($imageW && $imageH && $this->pageId) {
-            $page = EpaperPage::find($this->pageId);
-            if ($page && ($page->width != $imageW || $page->height != $imageH)) {
-                $page->update(['width' => $imageW, 'height' => $imageH]);
-            }
-        }
+        // Removed auto-heal — real dimensions are set by ProcessEditionPdf from getimagesize()
     }
 
     // Add current draft to pending list
@@ -83,13 +79,13 @@ class HotspotMapper extends Page
         $article = Article::find($this->selectedArticleId);
 
         $this->pendingHotspots[] = [
-            'tempId'      => uniqid(),
-            'article_id'  => $this->selectedArticleId,
-            'articleTitle'=> $article->title ?? 'Unknown',
-            'x'           => $this->draftX,
-            'y'           => $this->draftY,
-            'width'       => $this->draftW,
-            'height'      => $this->draftH,
+            'tempId' => uniqid(),
+            'article_id' => $this->selectedArticleId,
+            'articleTitle' => $article->title ?? 'Unknown',
+            'x' => $this->draftX,
+            'y' => $this->draftY,
+            'width' => $this->draftW,
+            'height' => $this->draftH,
         ];
 
         // Clear draft
@@ -119,12 +115,12 @@ class HotspotMapper extends Page
 
         foreach ($this->pendingHotspots as $h) {
             Hotspot::create([
-                'page_id'    => $this->pageId,
+                'page_id' => $this->pageId,
                 'article_id' => $h['article_id'],
-                'x'          => $h['x'],
-                'y'          => $h['y'],
-                'width'      => $h['width'],
-                'height'     => $h['height'],
+                'x' => $h['x'],
+                'y' => $h['y'],
+                'width' => $h['width'],
+                'height' => $h['height'],
             ]);
         }
 
